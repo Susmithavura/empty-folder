@@ -21,7 +21,7 @@ function createMessageTools(text) { const tools = document.createElement('div');
 function addMessage(text, sender) { const row = document.createElement('div'); row.className = `message-row ${sender === 'user' ? 'user-row' : 'ai-row'}`; const avatar = document.createElement('span'); avatar.className = 'message-avatar'; avatar.textContent = sender === 'user' ? 'You' : '*'; const bubble = document.createElement('div'); bubble.className = `message ${sender === 'user' ? 'user-message' : 'ai-message'}`; const paragraph = document.createElement('p'); paragraph.textContent = text; const time = document.createElement('time'); time.textContent = sender === 'user' ? 'Just now' : 'MOCK response - Just now'; bubble.append(paragraph, time); if (sender === 'ai') bubble.append(createMessageTools(text)); row.append(avatar, bubble); messages.appendChild(row); messages.scrollTop = messages.scrollHeight; if (sender === 'ai') latestAiText = text; }
 // Future API boundary: send { message, language, conversation_id } to POST /api/chat.
 async function sendMessageToBackend(message, languageCode) {
-  const response = await fetch('http://127.0.0.1:5000/api/chat', {
+  const response = await fetch('/api/chat', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ message, language: languageCode, conversation_id: 'demo-001' })
